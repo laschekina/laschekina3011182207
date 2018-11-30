@@ -1,0 +1,115 @@
+{% extends '::layout.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/lsimarket/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/lsimarket/css/iconic.cs') }}">
+	<link href="{{asset('bundles/lsimarket/js/vendor/ladda/ladda-themeless.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('bundles/lsimarket/js/vendor/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+{% endblock stylesheets %}
+
+{%  block body %}
+
+<!-- Header  -->
+
+<!-- Page layout -->
+<section class="content-section">
+	<div class="container">
+		<div class="title-row heading">
+			 
+					<div class="container">
+						
+							<!-- Contact To Agent -->    
+							<div class="col-md-12" id="titre_head">
+								<p><h2 id="titre 1">CONTACTER CIVILINC </h2></p><br><br>
+								<p>Nous envoyer un message. Un conseillé vous recontactera.</p><br>
+							</div>
+   
+                                                        
+							<div class="col-md-4">
+								<div class="content-box-2">
+									<figure class="image-box">
+										<img src="{{ asset('bundles/lsimarket/images/habilitation/9675018730_f3ab9ab065_b.jpg') }}" height="683" width="1024" alt="">
+									</figure>
+									<div class="contents" style="margin-bottom:101px">
+										<p><h3 class="heading-style-1">CIVILINC</h3></p>
+										Adresse : <br>
+										Code Postal : <br>
+										Ville : <br>
+										Téléphone : <br>
+										Email : <br>
+           
+									</div>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<div class="content-box-2 agents-contact">
+									<div class="heading">
+										<h5>Nous envoyer un message</h5>
+									</div>
+                                        {{ form_start(contactForm, {'attr' : {'class' : 'form-content pad-top-small', 'novalidate':'novalidate','id':'form-user-contact','data-parsley-validate':''}}) }}
+										<div class="row">
+											<div class="col-md-6 form-group-1">
+                                                {{ form_widget(contactForm.contactFirstname, {'attr': {'placeholder': 'Nom','class':'form-control  input-lg','data-parsley-required-message':'Merci d\'inscrire votre nom'}}) }}
+											</div>
+											<div class="col-md-6 form-group-1">
+                                                {{ form_widget(contactForm.contactEmail, {'attr': {'placeholder': 'Email','class':'form-control input-lg','data-parsley-required-message':'Merci d\'inscrire votre email','type':'email'}}) }}
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6 form-group-1">
+                                                {{ form_widget(contactForm.contactPhone, {'attr': {'placeholder': 'N° Tel','class':'form-control input-lg','data-parsley-required-message':'Merci  d\'inscrire votre N° Tel'}}) }}
+											</div>
+											<div class="col-md-6 form-group-1">
+                                                {{ form_widget(contactForm.contactLocation, {'attr': {'placeholder': 'Votre ville','class':'form-control input-lg','data-parsley-required-message':'Merci  d\'inscrire votre Ville'}}) }}
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group-1 col-md-12">
+                                                {{ form_widget(contactForm.contactMessage, {'attr': {'class':'form-control','data-parsley-required-message':'Entrer votre question','rows':'3' ,'data-parsley-minlength':'20','data-parsley-minlength-message':'Veuillez saisir au moins 20 caratères.'}}) }}
+											</div>
+										</div>
+										<div class="row pad-top-small">
+											<div class="col-md-12">
+												<button class="pull-right btn btn-primary  btn-large ladda-button btnSendMessage"  data-style="expand-right" type="submit"><span class="ladda-label">Soumetre</span></button>
+											</div>
+											<div class="text-success col-xs-12 hidden form-messges text-center">
+												<p>Nous repondrons dès que possible.</p>
+											</div>
+										</div>
+                                        {{ form_end(contactForm) }}
+									<div class="info-box-1">
+										<h5><span>OU APPELEZ NOUS DIRECTEMENT</span></h5>
+										<p><span class="large-text-1"><span class="iconic-phone-square"></span>900 123 3456 </span>&nbsp;</p>
+									</div>
+								</div>
+						 
+						<!-- Contact To Agent // -->
+					</div>
+                                     <div class="col-md-12" id="titre_head">
+                                        <iframe style="border: 0; margin-top:30px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2710.207049454749!2d-1.5729033!3d47.2125309!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4805ec0fcda6c4cb%3A0xd620ca38dafa1e9a!2s2+Rue+La+Motte+Picquet%2C+75010+Paris!5e0!3m2!1sfr!2sfr!4v1423244007186" width="100%" height="450" frameborder="0"></iframe>
+                                     </div>
+				  </div>  
+                           
+		</div>		
+	</div>
+</section>		
+<!-- Page layout // -->
+
+{%  endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+	<script>
+        var contactUrl = "{{ path('ls_imarket_contact') }}";
+	</script>
+	<script type="text/javascript" src="{{ asset('bundles/lsimarket/js/parsley.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/lsimarket/js/jquery.form.min.js') }}"></script>
+	<script src="{{asset('bundles/lsimarket/js/vendor/ladda/spin.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/lsimarket/js/vendor/ladda/ladda.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/lsimarket/js/vendor/bootstrap-toastr/toastr.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/lsimarket/js/contact.js')}}" type="text/javascript"></script>
+{% endblock javascripts %}
+

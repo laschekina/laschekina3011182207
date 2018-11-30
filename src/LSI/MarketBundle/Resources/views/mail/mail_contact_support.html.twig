@@ -1,0 +1,25 @@
+{#<h4>Votre annonce est maintenant visible</h4>#}
+<h1>Message d'un internaute </h1>
+
+<br/>
+{% if contact.contactFirstname is defined %}
+    <p>Nom : <strong>{{ contact.contactFirstname }}</strong></p>
+{% endif %}
+
+{% if contact.contactSecondname is defined %}
+    <p>Prénom(s) : <strong>{{ contact.contactSecondname }}</strong></p>
+{% endif %}
+
+<p>Email : <strong>{{ contact.contactEmail }}</strong></p>
+
+{% if contact.contactLocation is defined %}
+    <p>Localisation : <strong>{{ contact.contactLocation }}</strong></p>
+{% endif %}
+
+{% if contact.contactPhone is defined %}
+    <p>Téléphone : <strong>{{ contact.contactPhone }}</strong></p>
+{% endif %}
+
+<p>
+    {{ contact.contactMessage }}
+</p>

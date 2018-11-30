@@ -1,0 +1,47 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+
+<!-- Page layout -->
+<section class="content-section">
+    <div class="">
+    <div class="title-row heading">
+      <div class="col-md-12">
+        <h2>Réinitialiser votre mot de passe </h2>        
+    </div>
+    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <section class="content-section">
+                    <div class="">
+                        <div class="row-float contents pad-top-large">
+                            <div>&nbsp;
+                                <div class="comment-respond">
+                                     
+                                        <div class="t_center"> 
+                                           <p><h3><strong>ENTRER VOTRE ADRESSE E-MAIL OU VOTRE MOT DE PASSE</strong></h3></p>                                          
+                                            <div class="form-group col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 pg_20_top">
+                                                <div class="input-group">
+                                                    <p>{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}</p>
+                                                 </div>
+                                            </div>                                            
+                                        </div>                                       
+                                </div>
+                            </div>      
+                      </div>
+                  </div>
+            </div>
+</section>
+</div>
+</div>
+<div class="row-float contents pad-top-large">
+
+</div>
+</div>
+</section>
+<!-- Page layout // -->
+
+{% endblock %}

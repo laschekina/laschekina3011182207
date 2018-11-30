@@ -1,0 +1,380 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}
+    CIVILINC - Détails de la réservation
+{% endblock %}
+
+{% block body %}
+<section class="content-section">
+  <div class="container">
+
+    <div class="title-row heading">
+      <div class="col-md-12">       
+          <h3>Reservation de l'annonce</h3>           
+      </div>
+    </div>
+    <!-- Properties  Details -->
+    <div class="row pad-top-large">
+    <div class="col-sm-12 content-table">
+       <div class="content-back row-float">
+          <div class="col-md-5 content-table-image">
+             <div class="owlCarousel properties-slider">
+                   {% if annonce.images is not null %}            
+                      {% for list in annonce.images %}
+                        <img src="{{ asset(list.webPath) }}" alt="{{ list.alt }}" class="responsive" style="width:500px ; height:350px;;object-fit: cover;"/>
+                      {% endfor %}
+                    {% endif %}
+            </div>
+         </div>     
+         <div class="col-md-7 pull-right contents grid-gap-large">                   
+           <br>
+  <div class="pad-top-small"><h5>
+             {{ form_start(form) }}
+             <div class="row">
+                <div class="col-lg-6">
+                {{ form_row(form.debutPrestation) }}
+                <span id="msg1" style="display: none; color: red"><i>Veuillez choisir un date valide</i></span>
+                </div>
+             </div>
+              <div class="row">
+                <div class="col-lg-6">
+                {{ form_row(form.finPrestation) }}
+                <span id="msg2" style="display: none; color: red"><i>Veuillez choisir un date valide</i></span>
+                </div>
+              </div>
+             {# Affiche les erreurs de dates #}
+             <div id="errdt" style="display: none;">
+                 <span style="color: red"><i>La date de fin de prestation ne peut être antérieure à la
+                     date de début de prestation</i></span>
+             </div>
+                 <div class="row">
+                 <div class="col-lg-10">
+                     <label for="lsi_marketbundle_reserver_prixLocation">Tarif de la location en {{ annonce.typeforfait }}
+                         {{ form_row(form.prixLocation, {'attr': {'readonly':'readonly',
+                             'onfocus':'this.blur()', 'class':'alert alert-info', 'align':'center'}}) }}
+                     </label>
+
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-lg-10">
+                     <label for="lsi_marketbundle_reserver_montantReservation">Estimation de ce que vous devrez payer en €
+                         {{ form_row(form.montantReservation, {'attr': {'readonly':'readonly', 'onfocus':'this.blur()', 'class':'alert alert-warning'}}) }}
+                     </label>
+
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-lg-10">
+                     <label for="lsi_marketbundle_reserver_budgetRestant">Budget restant après la location en €
+                     {{ form_row(form.budgetRestant, {'attr': {'readonly':'readonly', 'onfocus':'this.blur()', 'class':'alert alert-warning'}}) }}</label>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-lg-10">
+                     <a href="#">Lire les conditions générales et particulières du contrat d'assurance </a>                    
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-lg-10">
+                     <label for="lsi_marketbundle_reserver_assurance">
+                         {{ form_row(form.assurance, {'label': 'Accepter les conditions d\'assurance'}) }}
+                     </label>
+                 </div>
+             </div>
+             {# <p>Tarif de la location : <span class="label label-info">{{ annonce.prixDefaut }} {{ annonce.typeforfait }}</span></p>
+             <p>Vous serez facturé : <span id="apayer" class="label label-warning"> </span> </p>
+             <p>Estimation du budget restant après la location : </p>
+             <p>Accepter les conditions d'assurances</p>  #}
+             {{ form_widget(form.save, {'attr' : {'class' : 'btn btn-success'}}) }}
+             {{ form_end(form) }}
+            </div> </h5>      
+         </div>
+     </div>
+     <!-- Properties  Details -->
+     <!-- Properties description -->
+     <div class="row pad-top-large">
+       <div class="container">
+         <div class="properties-descriptions tabs-vertical" role="tabpanel">
+           <ul class="nav nav-tabs">
+             <li class="active"><a href="#features" data-toggle="tab">FONTIONNALITES</a></li>
+             <li><a href="#openhouse" data-toggle="tab">MAIRIE</a></li>
+             {#<li><a href="#video" data-toggle="tab">VIDEO</a></li>#}
+             <li><a href="#map" data-toggle="tab">MAP</a></li>
+             <li><a href="#community" data-toggle="tab">EPCI</a></li>
+           </ul>
+           <div class="tab-content">             
+             <div class="tab-pane fade in active" id="features">               
+               <div class="contents">
+                <h2>Votre description complète de l'article</h2>
+                     <p>{{ annonce.description }}</p>
+
+                     <p>Règles et conditions : <i>{{ annonce.regleCond }}</i>
+               </div>               
+             </div>
+             <div class="tab-pane fade" id="openhouse">               
+              <div class="contents">
+                <h2>Lorem Ipsum</h2>
+                 <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition.</p>
+                 <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin </p>
+               </div>      
+             </div>
+             {#<div class="tab-pane fade" id="video">               
+              <div class="contents">
+              <h3>Regarder la vidéo</h3>
+              <div class="video-embed">
+                 <iframe width="560" height="315" src="https://www.youtube.com/watch?v=Tu-XNVI_mV0"></iframe>
+              </div>
+                
+               </div>      
+             </div>#}
+             <div class="tab-pane fade" id="map">
+               <iframe style="border: 0;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2710.207049454749!2d-1.5729033!3d47.2125309!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4805ec0fcda6c4cb%3A0xd620ca38dafa1e9a!2s2+Rue+La+Motte+Picquet%2C+44100+Nantes!5e0!3m2!1sfr!2sfr!4v1423244007186" width="100%" height="400" frameborder="0"></iframe>
+             </div>
+             <div class="tab-pane fade" id="community">               
+              <div class="contents">
+                 <h3>Plus d'informations sur les mairies</h3>
+                 <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition.</p>
+                 <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin </p>
+               </div>      
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <!-- Properties description // -->
+    <!-- Contact To Agent -->
+    <div class="title-row heading pad-top-large">
+      <div class="col-md-12">
+        <h2>BESOIN D'UNE INFORMATION</h2>
+        <p>Vous pouvez contacter cet agent avant toute opération</p>
+      </div>
+    </div>
+    <div class="row pad-top-small layout-flex">
+      <div class="col-md-4">
+        <div class="content-box-2">
+          <figure class="image-box">
+            <img src="{{ asset('bundles/lsimarket/images/properties-details/agents-1.jpg')}}" height="278" width="330" alt="">
+          </figure>
+          <div class="contents">
+            <h3 class="heading-style-1">xxxx</h3>
+            <p>here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly. </p>
+            <p class="text-right"><a href="#" class="btn btn-large btn-primary">En savoir plus</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="content-box-2 agents-contact">
+          <div class="heading">
+            <h5>Contactez xxxx par email</h5>
+          </div>
+          <form class="form-content pad-top-small" data-parsley-validate>
+            <div class="row">
+              <div class="col-md-6 form-group-1">
+                <input type="text" class="form-control input-lg" placeholder="Nom" required data-parsley-required-message="Please insert your name" name="name">
+              </div>
+              <div class="col-md-6 form-group-1">
+                <input type="text" class="form-control input-lg" placeholder="E-mail" required data-parsley-required-message="Please insert your Email" name="email">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group-1">
+                <input type="text" class="form-control input-lg" placeholder="Téléphone" required data-parsley-required-message="Please insert your contact no" data-parsley-min="10" name="contact">
+              </div>
+              <div class="col-md-6 form-group-1">
+                <input type="text" class="form-control input-lg" placeholder="Ville" required name="location">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group-1 col-md-12">
+                <textarea class="form-control" placeholder="Merci de noter votre question puis de valider le formulaire." rows="3"  required data-parsley-minlength="20" data-parsley-minlength-message = "Come on! You need to enter at least a 20 character comment.."  data-parsley-validation-threshold="10" data-parsley-maxlength="100" name="message"></textarea>
+              </div>
+            </div>
+            <div class="row pad-top-small">
+              <div class="col-md-12">
+                <button class="btn btn-primary btn-large pull-right">Envoyer</button>
+              </div>
+              <div class="text-success col-xs-12 hidden form-messges text-center">
+              <p>Nous vous enverrons une réponse dès que possible.</p>
+            </div>
+            </div>
+          </form>
+          <div class="info-box-1">
+            <h5><span>Ou appeler un agent</span></h5>
+            <p><span class="large-text-1"><span class="iconic-phone-square"></span>+33 01 45 87 45</span></p>
+          </div>
+        </div>
+      </div>
+    </div>   
+   <!-- Contact To Agent // -->    
+  </div>
+</section>
+<!-- Page layout // -->
+      
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script>
+        // Le code en question..
+        $(document).ready(function () {
+            var now = new Date();
+            
+            var dt1 = "", dt2 = "", nbJours ="", prix = "{{ annonce.prixDefaut }}", prixHt = "", budget = "{{ app.user.mairie.budgetRestant }}";
+            $("#lsi_marketbundle_reserver_prixLocation").val(prix);
+            $("#lsi_marketbundle_reserver_debutPrestation").on('change', function () {
+                 var start = $("#lsi_marketbundle_reserver_debutPrestation").val();
+                //alert(start);
+                dt1 = new Date(start);
+                //alert(dt);
+                 if (dt1 < now){
+                     msg1.style.display = '';
+                     $("#lsi_marketbundle_reserver_save").attr('disabled', true); //Désactive le bouton de soumission
+                 }else{
+                    msg1.style.display = 'none';
+                    $("#lsi_marketbundle_reserver_save").attr('disabled', false); //Active le bouton de soumission
+                 }
+
+                $("#lsi_marketbundle_reserver_finPrestation").attr('disabled', false);
+
+                 if(dt2 !== ""){
+                     // Vérifie que les deux dates sont bien valident
+                     if (dt2 > dt1 && dt1 > now){
+                         errdt.style.display = 'none';
+                         nbJours = diffdate(dt1, dt2); //Nombre de jours entre les deux dates.
+
+                         prixHt = nbJours * prix;
+                         document.getElementById('apayer').textContent = prixHt +' \u20ac';
+                         $("#lsi_marketbundle_reserver_save").attr('disabled', false); //Active le bouton de soumission
+                     }else{
+                         // Affiche le message d'erreur si la date 2 est < à la date 1.
+                         errdt.style.display = '';
+                         $("#lsi_marketbundle_reserver_save").attr('disabled', true); //Désactive le bouton de soumission
+                     }
+                 }
+            });
+            $("#lsi_marketbundle_reserver_finPrestation").on('change', function () {
+                var end = $("#lsi_marketbundle_reserver_finPrestation").val();
+                //Change le format de la date
+                dt2 = new Date(end);
+                // Compare la date 2 à la date du jour.
+                if (dt2 < now){
+                    msg2.style.display = ''; //Affiche une
+                    $("#lsi_marketbundle_reserver_save").attr('disabled', true); //Désactive le bouton de soumission
+                }else{
+                    msg2.style.display = 'none'; //Cache l'erreur
+                    $("#lsi_marketbundle_reserver_save").attr('disabled', false); //Active le bouton de soumission
+                }
+
+                // Vérifie que les deux dates sont bien valident
+                if (dt2 > dt1){
+                    errdt.style.display = 'none';
+                    nbJours = diffdate(dt1, dt2);
+
+                    prixHt = nbJours * prix;
+
+                    $('#lsi_marketbundle_reserver_montantReservation').val(prixHt);
+                    $('#lsi_marketbundle_reserver_budgetRestant').val((budget - prixHt));
+                }else{
+                    // Affiche le message d'erreur si la date 2 est < à la date 1.
+                    errdt.style.display = '';
+                }
+
+                // Déblocage du bouton de soumission
+                if (dt1 > now && dt2 > now && dt2 > dt1){
+                    $("#lsi_marketbundle_reserver_save").attr('disabled', false);
+                }else{
+                    $("#lsi_marketbundle_reserver_save").attr('disabled', true);
+                }
+            });
+        })
+
+        function diffdate(d1,d2){
+            var nbJours = d2.getTime() - d1.getTime();
+            return Math.ceil(nbJours/(1000*60*60*24));
+        }
+    </script>
+
+    {#<script>
+        // Le code en question..
+        $(document).ready(function () {
+            var now = new Date(); // La date du jour
+            
+            var dt1 = "", dt2 = "", nbJours ="", prix = "{{ annonce.prixDefaut }}", prixHt = "";
+            $("#lsi_marketbundle_reserver_debutPrestation").on('change', function () {
+                 var start = $("#lsi_marketbundle_reserver_debutPrestation").val();
+               
+                dt1 = new Date(start);
+                
+                 if (dt1 < now){
+                     msg1.style.display = '';
+                     $("#lsi_marketbundle_reserver_save").attr('disabled', true); //Désactive le bouton de soumission
+                 }else{
+                    msg1.style.display = 'none';
+                    $("#lsi_marketbundle_reserver_save").attr('disabled', false); //Active le bouton de soumission
+                 }
+
+                $("#lsi_marketbundle_reserver_finPrestation").attr('disabled', false);
+
+                 if(dt2 !== ""){
+                     // Vérifie que les deux dates sont bien valident
+                     if (dt2 > dt1 && dt1 > now){
+                         errdt.style.display = 'none';
+                         nbJours = diffdate(dt1, dt2); //Nombre de jours entre les deux dates.
+
+                         prixHt = nbJours * prix;
+                         document.getElementById('apayer').textContent = prixHt +' \u20ac';
+                         $("#lsi_marketbundle_reserver_save").attr('disabled', false); //Active le bouton de soumission
+                     }else{
+                         // Affiche le message d'erreur si la date 2 est < à la date 1.
+                         errdt.style.display = '';
+                         $("#lsi_marketbundle_reserver_save").attr('disabled', true); //Désactive le bouton de soumission
+                     }
+                 }
+            });
+            $("#lsi_marketbundle_reserver_finPrestation").on('change', function () {
+                var end = $("#lsi_marketbundle_reserver_finPrestation").val();
+                //Change le format de la date
+                dt2 = new Date(end);
+                // Compare la date 2 à la date du jour.
+                if (dt2 < now){
+                    msg2.style.display = ''; //Affiche une
+                    $("#lsi_marketbundle_reserver_save").attr('disabled', true); //Désactive le bouton de soumission
+                }else{
+                    msg2.style.display = 'none'; //Cache l'erreur
+                    $("#lsi_marketbundle_reserver_save").attr('disabled', false); //Active le bouton de soumission
+                }
+
+                // Vérifie que les deux dates sont bien valident
+                if (dt2 > dt1){
+                    errdt.style.display = 'none';
+                    nbJours = diffdate(dt1, dt2);
+
+                    prixHt = nbJours * prix;
+                    document.getElementById('apayer').textContent = prixHt +' \u20ac';
+                }else{
+                    // Affiche le message d'erreur si la date 2 est < à la date 1.
+                    errdt.style.display = '';
+                }
+
+                // Déblocage du bouton de soumission
+                if (dt1 > now && dt2 > now && dt2 > dt1){
+                    $("#lsi_marketbundle_reserver_save").attr('disabled', false);
+                }else{
+                    $("#lsi_marketbundle_reserver_save").attr('disabled', true);
+                }
+            });
+        })
+        // Calcule l'intervalle entre les deux dates
+        function diffdate(d1,d2){
+            var nbJours = d2.getTime() - d1.getTime();
+            return Math.ceil(nbJours/(1000*60*60*24));
+        }
+    </script>#}
+    
+{% endblock javascripts %}
+
+
+
+

@@ -1,0 +1,299 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+    <h1> Gestion des tarifs </h1> 
+
+    {{form_start(form, {'attr' : {'claas' : 'form-control', 'novalidate' : 'novalidate'}}) }}
+                <div class="form-group" onclick="tarif()">
+                {{ form_label(form.mairies, 'Public Cible : Mairies' , {'class' : 'checkbox-inline'} )}}
+                {{ form_errors(form.mairies)}}
+                {{form_widget(form.mairies, {'attr' : {'class' : 'checkbox-inline'}}) }}
+                </div>
+                {% if form.mairies is defined %}
+                    <table id="plage1" class="table table-sptriped table-bordered" style="display:none;" data-prototype="" >
+                <thead>
+                  <tr>
+                      <th>Les Mairies de mon EPCI </th>
+                  </tr>
+                </thead>
+                      <tbody>
+                        <tr >
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.datedebut1, 'Date de début de la plage', {'required' : false}) }}
+                            {{ form_widget(form.datedebut1, {'required' : false}) }}
+                        </div>
+                        </td>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.datefin1, 'Date de fin de la plage' , {'required' : false}) }}
+                            {{ form_widget(form.datefin1 , { 'required' : false}) }}
+                        </div>
+                        </td>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.prix1, 'Donner le prix pour ce public' , {'requred' : false}) }}
+                            {{ form_widget(form.prix1, {'attr': {'placeholder': 'le prix', 'required' : false}})}}
+                        </div>
+                        </td>
+                        <td>
+                            <input type="button" id="add_code" value="autres plages" class="btn btn-warning pull-right"/>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+                <table id="plage2" class="table table-sptriped table-bordered" style="display:none;">
+                  <thead>
+                  <tr class="success">
+                      <th> Autres Mairies </th></tr></thead>
+                      <tbody>
+                        <tr class="success">
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.datedebut2, 'Date de début de la plage', {'required' : false}) }}
+                            {{ form_widget(form.datedebut2, {'required' : false}) }}
+                        </div>
+                        </td>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.datefin2, 'Date de fin de la plage' , {'required' : false}) }}
+                            {{ form_widget(form.datefin2 , { 'required' : false}) }}
+                        </div>
+                        </td>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.prix2, 'Donner le prix pour ce public' , {'requred' : false}) }}
+                            {{ form_widget(form.prix2, {'attr': {'placeholder': 'le prix', 'required' : false}})}}
+                        </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                 </table>
+                {% endif %}
+                <div class="form-group" onclick="plage()">
+                {{ form_label(form.administres, 'Public Cible : Administrés', {'class' : 'checkbox-inline'} )}}
+                {{ form_errors(form.administres)}}
+                {{ form_widget(form.administres, {'attr' : {'class' : 'checkbox-inline'}} )}}
+                </div>         
+                {% if form.administres is defined %}
+                    <table id="plage3" class="table table-sptriped table-bordered" style="display:none;">
+                  <thead>
+                  <tr>
+                      <th> Les Administres de mon EPCI </th></tr></thead>
+                      <tbody>
+                        <tr>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.datedebut3, 'Date de début de la plage', {'required' : false}) }}
+                            {{ form_widget(form.datedebut3, {'required' : false}) }}
+                        </div>
+                        </td>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.datefin3, 'Date de fin de la plage' , {'required' : false}) }}
+                            {{ form_widget(form.datefin3 , { 'required' : false}) }}
+                        </div>
+                        </td>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.prix3, 'Donner le prix pour ce public' , {'requred' : false}) }}
+                            {{ form_widget(form.prix3, {'attr': {'placeholder': 'le prix', 'required' : false}})}}
+                        </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                 </table>
+                    <table id="plage4" class="table table-sptriped table-bordered" style="display:none;">
+                  <thead>
+                  <tr class="success">
+                      <th> Autres Administres </th></tr></thead>
+                      <tbody>
+                        <tr class="success">
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.datedebut4, 'Date de début de la plage', {'required' : false}) }}
+                            {{ form_widget(form.datedebut4, {'required' : false}) }}
+                        </div>
+                        </td>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.datefin4, 'Date de fin de la plage' , {'required' : false}) }}
+                            {{ form_widget(form.datefin4 , { 'required' : false}) }}
+                        </div>
+                        </td>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.prix4, 'Donner le prix pour ce public' , {'requred' : false}) }}
+                            {{ form_widget(form.prix4, {'attr': {'placeholder': 'le prix', 'required' : false}})}}
+                        </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+                <table id="plage5" class="table table-sptriped table-bordered" style="display:none;">
+                  <thead>
+                  <tr>
+                      <th> Pas aux Administrés </th></tr></thead>
+                      <tbody>
+                        <tr>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.datedebut5, 'Date de début de la plage', {'required' : false}) }}
+                            {{ form_widget(form.datedebut5, {'required' : false}) }}
+                        </div>
+                        </td>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.datefin5, 'Date de fin de la plage' , {'required' : false}) }}
+                            {{ form_widget(form.datefin5 , { 'required' : false}) }}
+                        </div>
+                        </td>
+                        <td>
+                        <div class="form-group">
+                            {{ form_label(form.prix5, 'Donner le prix pour ce public' , {'requred' : false}) }}
+                            {{ form_widget(form.prix5, {'attr': {'placeholder': 'le prix', 'required' : false}})}}
+                        </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                 </table>
+                {% endif %}
+            </div>
+           <div>
+
+            <button type="submit" class="btn btn-success pull-right" >Enregistrer</button>
+
+           </div>
+
+    {{ form_end(form)}}
+
+{% endblock body %}
+{% block javascripts %}
+
+    {{ parent()}}   
+
+    <script type="text/javascript">
+        function tarif(){
+            var valeur;
+            if(document.getElementById('lsi_marketbundle_annonceprix_mairies_1').checked){
+                plage1.style.display = '';
+                valeur = document.getElementById('lsi_marketbundle_annonceprix_mairies_1').value;}
+            else if(document.getElementById('lsi_marketbundle_annonceprix_mairies_2').checked){
+                plage2.style.display = '';
+                valeur = document.getElementById('lsi_marketbundle_annonceprix_mairies_1').value;}
+            else if(valeur != document.getElementById('lsi_marketbundle_annonceprix_mairies_1').value){
+                plage1.style.display = 'none';
+                plage2.style.display = 'none';
+                valeur = document.getElementById('lsi_marketbundle_annonceprix_mairies_').value;}
+            else if(valeur != document.getElementById('lsi_marketbundle_annonceprix_mairies_2').value){
+                plage2.style.display = ''; plage1.style.display = '';
+                valeur = document.getElementById('lsi_marketbundle_annonceprix_mairies_1').value;
+            }
+                
+    }
+
+    </script>
+    <script type="text/javascript">
+        function plage(){
+            var val;
+            if(document.getElementById('lsi_marketbundle_annonceprix_administres_3').checked){
+                plage3.style.display = '';
+                val = document.getElementById('lsi_marketbundle_annonceprix_administres_3').value;}
+            else if(document.getElementById('lsi_marketbundle_annonceprix_administres_4').checked){
+                plage4.style.display = '';
+                val = document.getElementById('lsi_marketbundle_annonceprix_administres_3').value;}
+            else if(document.getElementById('lsi_marketbundle_annonceprix_administres_5').checked){
+                plage5.style.display = '';
+                val = document.getElementById('lsi_marketbundle_annonceprix_administres_3').value;}
+            else if(val != document.getElementById('lsi_marketbundle_annonceprix_administres_3').value) {
+                plage3.style.display = 'none';
+                plage4.style.display = 'none';
+                plage5.style.display = 'none';
+                val = document.getElementById('lsi_marketbundle_annonceprix_administres_4').value;}
+            else if(val != document.getElementById('lsi_marketbundle_annonceprix_administres_4').value){ 
+                plage3.style.display = ''; plage4.style.display = ''; plage5.style.display = '';
+                val = document.getElementById('lsi_marketbundle_annonceprix_administres_5')
+            }
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+            var $container = $('div#plage1');
+
+            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+            var index = $container.find(':input').length;
+
+            // On ajoute un nouveau champ à chaque click sur le bouton
+            $('#add_code').click(function (e) {
+                addPlage($container);
+                e.preventDefault(); // Pour éviter qu'un # apparaissent dans l'URL
+                return false;
+            });
+
+            // On ajoute automatiquement le 1er champ sans le bouton de suppression
+            if ( index == 0 ){
+                addPlage($container);
+            }else{
+                // S'il existe déjà des champs de codes
+                $container.children('div').each(function () {
+                    addDeleteLink($(this));
+                });
+            }
+
+            // Fonction pour ajouter un formulaire de code postal
+            function addPlage($container) {
+                var template;
+
+                if (index == 0){
+                    template = $container.attr('data-prototype')
+                        .replace(/__name__label__/g, '')
+                        .replace(/__name__/g, index)
+                    ;
+                }else{
+                    template = $container.attr('data-prototype')
+                        .replace(/__name__label__/g, 'Plage '+ (index +1))
+                        .replace(/__name__/g, index)
+                    ;
+                }
+
+                // On crée un objet jquery qui contiendra le template
+                var $prototype = $(template);
+
+                // On ajoute au prototype un lien pour pouvoir supprimer le code postal
+                if(index == 0){
+
+                }else{
+                    addDeleteLink($prototype);
+                }
+
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+
+                // On incrémente l'index
+                index++;
+            }
+            // La fonction pour supprimer un code postal
+            function addDeleteLink($prototype) {
+                // Création du bouton
+                var $deleteButton = $('<input type="button" value="Supprimer" class="btn btn-danger"/>');
+
+                // Ajout du bouton
+                $prototype.append($deleteButton);
+
+                // Ajout d'un listener sur le clic du lien pour supprimer la catégorie
+                $deleteButton.click(function(e) {
+                    $prototype.remove();
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+
+                    return false;
+
+                });
+            }
+        });
+    </script>
+
+{% endblock javascripts %}
+

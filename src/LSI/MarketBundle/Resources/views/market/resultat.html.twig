@@ -1,0 +1,12 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% for list in listeannonce %}
+            {% for listimg in list.images %}
+                <img src="{{ asset(listimg.webPath) }}" alt="{{ listimg.alt }}" style="margin: 5px; height: 350px; width: 250px"/>
+            {% endfor %}
+            <h3>{{ list.titre }}</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

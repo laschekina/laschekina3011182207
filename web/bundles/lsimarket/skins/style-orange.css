@@ -1,0 +1,37 @@
+.sidebar-full-height, .sidebar-full-height2, .PagescrollToTop, .map-search-form, .search-interaction .tab:hover,
+.btn-primary, .btn-primary:before, .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active, .sidebar .widget li:hover, .project-list .title , .header-v2-top, .widget-1-address .logo-image, .sidebar-close-bar2, #wp-calendar caption{
+	background-color: #FFAB4B;
+}
+.dropcap-bg {
+	color: #FFAB4B;
+}
+.sidebar .recent-post li:hover {
+	background: none;
+}
+.btn-primary:hover {
+	background-color: #4AA981;
+}
+.logo, .logo-footer, .btn-primary, .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active, .sidebar .widget li, .headline.v1 h2, .headline.v1 h3, .headline.v1 h4 {
+	border-color:  #FFAB4B;
+}
+.text-box-v2, .tag-box-v1 {
+	border-top-color: #FFAB4B;
+}
+.tag-box-v2 {
+	border-left-color: #FFAB4B;
+}
+.tag-box-v7 {
+	border-bottom-color: #FFAB4B;
+}
+.map-search-form .form-tab a, .navigation li a:hover, .navigation li a.active, .testimonials .testimonial-info, .articles-masonory h2 .iconic, .articles-row h2 .iconic, .article-title .has-icon .iconic {
+	color: #FFAB4B;
+}
+.header-v1-top li a {
+	color: #aaa;
+}
+ .header-v2-top li a {
+	color: #333;
+}
+.header-v1-top li a:hover, .header-v2-top li a:hover {
+	color: #fff;
+}

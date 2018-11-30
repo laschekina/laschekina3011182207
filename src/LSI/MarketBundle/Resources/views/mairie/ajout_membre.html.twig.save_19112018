@@ -1,0 +1,77 @@
+<div class="row">
+{{ form_start(form, {'method': 'post', 'action': path('lsi_market_ajout_membre')}) }}
+
+    <div class="col-md-5">
+        <figure class="image-box">
+            <img id="output" src="{{ asset('bundles/lsimarket/images/member.jpg') }}" height="189" width="165" alt="">
+        </figure>
+        <br>
+        <label class="custom-file">
+            {{ form_widget(form.membre.file, {'attr': {'class': 'custom-file-input', 'onchange':'loadFile(event)'}}) }}
+            <span class="custom-file-control"></span>
+        </label>
+        <script> /* Pour faire apparaitre la photo uploader */
+            var loadFile = function(event) {
+                var output = document.getElementById('output');
+                output.src = URL.createObjectURL(event.target.files[0]);
+            };
+        </script>
+    </div>
+    <div class="col-md-7">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                  {{ form_label(form.membre.prenom, 'Prénom:') }}
+                  {{ form_row(form.membre.prenom, {'attr': {'placeholder': 'Entrer le prénom'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.membre.nom, 'Nom:') }}
+                    {{ form_row(form.membre.nom, {'attr': {'placeholder': 'Entrer le nom'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.username, 'Nom d\'utilisateur:') }}
+                    {{ form_widget(form.username, {'attr': {'placeholder': 'Entrer le nom d\'utilisateur'}}) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form_label(form.email, 'Adresse email:') }}
+                    {{ form_widget(form.email, {'attr': {'placeholder': 'Entrer votre email'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.plainPassword.first, 'Entrer le mot de passe:') }}
+                    {{ form_widget(form.plainPassword.first, {'attr' : {'placeholder' : 'Entrez le mot de passe'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.plainPassword.second, 'Confirmer le mot de passe:') }}
+                    {{ form_widget(form.plainPassword.second, {'attr' : {'placeholder' : 'Rétapez le mot de passe'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {{ form_label(form.membre.fonction, 'Fonction:') }}
+            {{ form_widget(form.membre.fonction, {'attr': {'placeholder': 'Entrer la fonction'}}) }}
+        </div>
+
+        <div class="row">
+            <div class="col-md-5" style="margin-left: 7px;">
+                Le membre est autorisé à :
+            </div>
+            <div class="col-md-7">
+                {{ form_widget(form.membre.devis) }}
+                {{ form_widget(form.membre.contratAchat) }}
+                {{ form_widget(form.membre.vente) }}
+                {{ form_widget(form.membre.reference) }}
+                  <br/>
+            </div>
+        </div>
+            {{ form_widget(form.Ajouter, { 'label': 'Créer le membre1', 'attr' : {'class' : 'pull-right btn btn-info',
+                'style': 'margin-top:10px'}}) }}
+    </div>
+{{ form_end(form) }}
+</div>
+

@@ -1,0 +1,35 @@
+services:
+# Service d'envoi de mails.....
+    lsi_market.email.civilink_mailer:
+        class: LSI\MarketBundle\Email\EnvoyerMail
+        arguments:
+            - "@mailer"
+            - "%mailer_user%"
+            - "%mailer_support%"
+            - "@templating"
+
+# Service de Gestion automatique des envois de mails.....
+    # lsi_market.doctrine_listener.creation_annonce:
+    #     class: LSI\MarketBundle\DoctrineListener\CreationAnnonceListener
+    #     arguments:
+    #         - "@lsi_market.email.civilink_mailer"
+    #     tags:
+    #         - { name: doctrine.event_listener, event: postPersist }
+
+# Service de gestion des extensions twig
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+#   Service de redirection après authentification
+    after.login.redirect:
+        class: LSI\MarketBundle\Listener\AfterLoginRedirectListener
+        arguments:
+            - "@router"
+
+# Service de gestion du calendrier des disponibilités des annonces
+    lsi_market.service.listener:
+        class: LSI\MarketBundle\Listener\LoadDataListener
+        tags:
+            - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: loadData }

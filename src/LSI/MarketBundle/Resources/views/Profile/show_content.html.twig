@@ -1,0 +1,101 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div id="page" class="fos_user_user_show">
+    <h2>COORDONNEES</h2>
+    <table class="table table-striped">
+        {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
+
+        {% else %}
+            <tr>
+                <td style="width:150px">{{ 'Nom'|trans }}</td>
+                <td>{{ user.nom }}</td>
+            </tr>
+        {% endif %}
+
+        {% if app.user.hasRole('ROLE_PART') %}
+            <tr>
+                <td>{{ 'Prenom' }}</td>
+                <td>{{ user.administre.prenom }}</td>
+            </tr>
+            {# <tr>
+                <td>{{ 'Langue maternelle' }}</td>
+                <td>{{ user.administre.langueMat }}</td>
+            </tr> #}
+            <tr>
+                <td>{{ 'Photo de profil' }}</td>
+                <td>{{ user.administre.photoProfil }}</td>
+            </tr>
+        {% elseif app.user.hasRole('ROLE_MAIRIE') %}
+            <tr>
+                <td>{{ 'Description' }}</td>
+                <td>{{ user.mairie.description }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'Service' }}</td>
+                <td>{{ user.mairie.service }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'Comptable' }}</td>
+                <td>{{ user.mairie.comptable }}</td>
+            </tr>
+        {% endif %}
+
+        <tr>
+            <td>{{ 'profile.show.username'|trans }}</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'profile.show.email'|trans }}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
+
+        {% else %}
+            {% if user.telephone is defined and not null %}
+                <tr>
+                    <td>{{ 'Téléphone' }}</td>
+                    <td>{{ user.telephone }}</td>
+                </tr>
+            {% endif %}
+            {% if user.adresse.pays is defined and not null %}
+                <tr>
+                    <td>{{ 'Pays' }}</td>
+                    <td>{{ user.adresse.pays }}</td>
+                </tr>
+            {% endif %}
+            {% if user.adresse.ville is defined and not null %}
+                <tr>
+                    <td>{{ 'Ville' }}</td>
+                    <td>{{ user.adresse.ville }}</td>
+                </tr>
+            {% endif %}
+            {% if user.adresse.rue is defined and not null %}
+                <tr>
+                    <td>{{ 'Rue' }}</td>
+                    <td>{{ user.adresse.rue }}</td>
+                </tr>
+            {% endif %}
+            {% if user.adresse.codePostal is defined and not null %}
+                <tr>
+                    <td>{{ 'Code postal' }}</td>
+                    <td>{{ user.adresse.codePostal }}</td>
+                </tr>
+            {% endif %}
+            {# {% if user.indicatif is defined and not null %}
+                <tr>
+                    <td>{{ 'Indicatif' }}</td>
+                    <td> + {{ user.indicatif }}</td>
+                </tr>
+            {% endif %}
+            {% if user.langue is defined and not null %}
+                <tr>
+                    <td>{{ 'Langue' }}</td>
+                    <td>{{ user.langue |capitalize }}</td>
+                </tr>
+            {% endif %} #}
+        {% endif %}
+    </table>
+    <div class="row">
+        <center><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-warning">Modifier mon profil</a></center>
+    </div>
+</div>

@@ -1,0 +1,355 @@
+﻿<?php
+
+namespace LSI\MarketBundle\Controller;
+
+
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use LSI\MarketBundle\Entity\Annonce;
+use LSI\MarketBundle\Entity\Categorie;
+use LSI\MarketBundle\Entity\Reserver;
+use LSI\MarketBundle\Entity\Image;
+use LSI\MarketBundle\Entity\AnnoncePrix;
+use LSI\MarketBundle\Entity\PublicAdministre;
+use LSI\MarketBundle\Entity\PublicMairie;
+use LSI\MarketBundle\Entity\Message;
+use LSI\MarketBundle\Form\MessageType;
+use LSI\MarketBundle\Form\AnnonceType;
+use LSI\MarketBundle\Form\Annonce2Type;
+use LSI\MarketBundle\Entity\Calendrier;
+use LSI\MarketBundle\Form\AnnoncePrixType;
+use LSI\MarketBundle\Repository\CategorieRepository;
+use LSI\MarketBundle\Repository\AnnoncePrixRepository;
+use LSI\MarketBundle\Repository\AnnonceRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use LSI\MarketBundle\Form\ReserverType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Validator\Constraints\Regex;
+
+
+class MarketController extends Controller {
+
+    public function indexAction(){
+
+         return $this->render('LSIMarketBundle:market:index.html.twig');
+
+    }
+
+ public function listeOffresAction(Request $request){
+        // Formulaire pour la recherche avancée
+        $form  = $this->createFormBuilder()
+            ->setMethod('GET')
+            ->add('categorie', EntityType::class, array(
+                'class' => Categorie::class,
+                'query_builder' => function(CategorieRepository $cr){
+                    return $cr->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
+                'choice_label' => 'name',
+                'required' => false,
+                'placeholder' => 'Choisir une categorie',
+            ))
+            ->add('pays', TextType::class, array('required' => false,
+                ))
+            ->add('departement', TextType::class,
+                array(
+                    'required' => false,
+                ))
+            ->add('ville', TextType::class,
+                array(
+                    'required' => false,
+                ))
+            ->add('mini', TextType::class,
+                array(
+                    'required' => false,
+                    'constraints' => array(
+                        new Regex( array(
+                            'pattern' => '/\d+(\.\d+)?/',
+                            'message' => 'Informations invalides'
+                        )))
+                ))
+            ->add('max', TextType::class,
+                array(
+                    'required' => false,
+                    'constraints' => array(
+                        new Regex( array(
+                            'pattern' => '/\d+(\.\d+)?/',
+                            'message' => 'Informations invalides'
+                        )))))
+            ->add('debutdate', DateType::class, array(
+                    'widget' => 'single_text',
+                    'format' => 'yyyy-MM-dd',
+                    'html5' => true,
+                    'required' => false,
+                )
+            )
+            ->add('findate', DateType::class, array(
+                    'widget' => 'single_text',
+                    'format' => 'yyyy-MM-dd',
+                    'html5' => true,
+                    'required' => false,
+                )
+            )
+            
+            ->getForm();
+
+        $form->handleRequest($request);
+       
+        if ($form->isSubmitted() && $form->isValid()){
+            $data = $form->getData();
+            
+            $categ = $data['categorie'];
+                $pays = $data['pays'];
+                $depart = $data['departement'];
+                $ville = $data['ville'];
+                $prixmini = $data['mini'];
+                $prixmax = $data['max'];
+                $datedebut = $data['debutdate'];
+                $datefin = $data['findate'];
+
+
+            $reposi_annonce = $this->getDoctrine()->getRepository('LSIMarketBundle:Annonce');
+             $em = $this->getDoctrine()->getManager();
+              $mairiename = $em->getRepository('LSIMarketBundle:User')->findNameMairie();
+            $annonces = $reposi_annonce->findByannonce($categ, $pays, $depart, $ville, $prixmini, $prixmax, $datedebut, $datefin);
+           
+            return $this->render('LSIMarketBundle:market:offres.html.twig',
+                array('annonces' => $annonces,
+                	'mairiename' => $mairiename,
+                    'formrechavancee' => $form->createView()));
+
+        }
+        $em = $this->getDoctrine()->getManager();
+
+        // Recuperer toutes les annonces en bd
+        $annonces = $em->getRepository('LSIMarketBundle:Annonce')->findAll();
+        $mairiename = $em->getRepository('LSIMarketBundle:User')->findNameMairie();
+
+        return $this->render('LSIMarketBundle:market:offres.html.twig',
+            array('annonces' => $annonces,
+                'mairiename' => $mairiename,
+                'formrechavancee' => $form->createView()));
+    }
+
+    // Phase 1 de la création d'une annonce
+    public function ajouterAction(Request $request){
+        // Restreindre l'acces uniquement a la mairie
+        $this->denyAccessUnlessGranted('ROLE_MAIRIE', $this->redirectToRoute('fos_user_security_login'));
+       
+        $annonce = new Annonce();
+        $form = $this->createForm(AnnonceType::class, $annonce);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $user = $this->getUser()->getMairie();
+            $annonce->setMairie($user);
+            $em->persist($annonce);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('notif', 'Annonce ajoutée avec succès !');
+
+            return $this->redirectToRoute('ls_imarket_ajouter_annonce2', array('id' => $annonce->getId()));
+        }
+        return $this->render('LSIMarketBundle:market:ajouter.html.twig', array('form' => $form->createView()));
+    }
+
+    // Phase 2 de la création de l'annonce
+    public function ajouter2Action($id, Request $request) {
+        $this->denyAccessUnlessGranted('ROLE_MAIRIE', $this->redirectToRoute('fos_user_security_login'));
+        $em = $this->getDoctrine()->getManager();
+        //recupération de l'objet
+        $annonce = $em->getRepository('LSIMarketBundle:Annonce')->find($id);
+        if (null === $annonce)
+        {
+            throw new NotFoundHttpException("L'annonce dont le numéro est ".$id." n'existe pas.");
+        }
+        //création du formulaire
+        $form = $this->createForm(Annonce2Type::class, $annonce);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            //Insertion dans la BD
+            $em->persist($annonce);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('notice', 'Votre Annonce a été crée et publiée.');
+            //Redirection vers la page de consultation
+            return $this->redirectToRoute('ls_imarket_voir_annonce', array('id' => $annonce->getId(),
+            ));
+        }
+        //création de la vue
+        return $this->render('LSIMarketBundle:market:ajouter2.html.twig', array('form' => $form->createView()));
+    }
+
+    // Récupère les disponibilités d'une annonce
+    public function disponibiliteAction($id){
+        
+        $em = $this->getDoctrine()->getManager();
+        //recuperons l'id de annonce
+        $annonce = $em->getRepository('LSIMarketBundle:Annonce')->find($id);
+        if (null === $annonce)
+        {
+            throw new NotFoundHttpException("L'annonce dont le numéro est ".$id." n'existe pas.");
+        }
+
+        
+        $statut = $em->getRepository('LSIMarketBundle:Annonce')->findAnnoncesAvecCalendrier($id);        
+
+        $dispo;
+        foreach ($statut as $disp) {
+            $dispo = $disp;
+        }
+
+       return $this->render('LSIMarketBundle:market:plage.html.twig', array('dispo' => $dispo));
+    }
+
+    // Consulter une annonce
+   /* public function voirAction($id){
+        $em = $this->getDoctrine()->getManager();
+
+        // Recuperer l'annonce cliquee
+        $annonce = $em->getRepository('LSIMarketBundle:Annonce')->find($id);
+        // Verifier pour voir s'il y a une reservation sur l'annonce
+        $repo = $this->getDoctrine()->getRepository('LSIMarketBundle:Reserver');
+        $annreserv = $repo->AnnReserv($id);
+
+        foreach ($annreserv as $value){
+            $var = $value;
+        }
+        if(null === $annonce){
+            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+        }
+        // Recuperer l'auteur de l'annonce...
+        $auteur = $em->getRepository('LSI\MarketBundle\Entity\User')
+                     ->findAuteurAnnonce($annonce->getMairie()->getId());
+
+
+        return $this->render('LSIMarketBundle:market:voir.html.twig', array('annonce' => $annonce,
+            'auteur' => $auteur,
+            'var' => $var));
+    }*/
+    /*public function voirAction($id){
+        $em = $this->getDoctrine()->getManager();
+
+        // Recuperer l'annonce cliquee
+        $annonce = $em->getRepository('LSIMarketBundle:Annonce')->find($id);
+
+        //var_dump($annonce); die;
+        //dump($annonce);
+        // Verifier pour voir s'il y a une reservation sur l'annonce
+        $repo = $this->getDoctrine()->getRepository('LSIMarketBundle:Reserver');
+        $annreserv = $repo->AnnReserv($id);
+
+        foreach ($annreserv as $value){
+            $var = $value;
+        }
+
+        // Traitement pour fullcalendar, la gestion de la disponibilité
+        $disp = $em->getRepository('LSIMarketBundle:Annonce')->disponibilite($id);
+
+        if(!isset($disp[0])){
+            // Recuperer l'auteur de l'annonce...
+            $auteur = $em->getRepository('LSI\MarketBundle\Entity\User')
+                ->findAuteurAnnonce($annonce->getMairie()->getId());
+
+            return $this->render('LSIMarketBundle:market:voir.html.twig', array('annonce' => $annonce,
+                'auteur' => $auteur,
+                'var' => $var,
+            ));
+        }
+        $calendrier = $disp[0]->getCalendrier();
+        $statut = $calendrier[0]->getStatut()->getLibelle();
+
+        if(null === $annonce){
+            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+        }
+        elseif ($statut == "Disponible"){
+            $datedebut = $calendrier[0]->getDebut();
+            $datefin = $calendrier[0]->getFin();
+
+            $colordispo = "green";
+            // Recuperer l'auteur de l'annonce...
+            $auteur = $em->getRepository('LSI\MarketBundle\Entity\User')
+                ->findAuteurAnnonce($annonce->getMairie()->getId());
+
+            return $this->render('LSIMarketBundle:market:voir.html.twig', array('annonce' => $annonce,
+                'auteur' => $auteur,
+                'datedebut' => $datedebut,
+                'datefin' => $datefin,
+                'statut' => $statut,
+                'colordispo' => $colordispo,
+                'var' => $var,
+            ));
+        }
+        elseif ($statut == "Indisponible"){
+            $datedebut = $calendrier[0]->getDebut();
+            $datefin = $calendrier[0]->getFin();
+
+            $colordispo = "red";
+            // Recuperer l'auteur de l'annonce...
+            $auteur = $em->getRepository('LSI\MarketBundle\Entity\User')
+                ->findAuteurAnnonce($annonce->getMairie()->getId());
+
+            return $this->render('LSIMarketBundle:market:voir.html.twig', array('annonce' => $annonce,
+                'auteur' => $auteur,
+                'datedebut' => $datedebut,
+                'datefin' => $datefin,
+                'statut' => $statut,
+                'colordispo' => $colordispo,
+                'var' => $var,
+            ));
+        }
+        elseif ($statut == "Reservé"){
+            $datedebut = $calendrier[0]->getDebut();
+            $datefin = $calendrier[0]->getFin();
+
+            $colordispo = "bleu";
+            // Recuperer l'auteur de l'annonce...
+            $auteur = $em->getRepository('LSI\MarketBundle\Entity\User')
+                ->findAuteurAnnonce($annonce->getMairie()->getId());
+
+            return $this->render('LSIMarketBundle:market:voir.html.twig', array('annonce' => $annonce,
+                'auteur' => $auteur,
+                'datedebut' => $datedebut,
+                'datefin' => $datefin,
+                'statut' => $statut,
+                'colordispo' => $colordispo,
+                'var' => $var,
+            ));
+        }
+        elseif ($statut == "Indeterminé"){
+            $datedebut = $calendrier[0]->getDebut();
+            $datefin = $calendrier[0]->getFin();
+
+            $colordispo = "yellow";
+            // Recuperer l'auteur de l'annonce...
+            $auteur = $em->getRepository('LSI\MarketBundle\Entity\User')
+                ->findAuteurAnnonce($annonce->getMairie()->getId());
+
+            return $this->render('LSIMarketBundle:market:voir.html.twig', array('annonce' => $annonce,
+                'auteur' => $auteur,
+                'datedebut' => $datedebut,
+                'datefin' => $datefin,
+                'statut' => $statut,
+                'colordispo' => $colordispo,
+                'var' => $var,
+            ));
+        }
+        // Recuperer l'auteur de l'annonce...
+        $auteur = $em->getRepository('LSI\MarketBundle\Entity\User')
+            ->findAuteurAnnonce($annonce->getMairie()->getId());
+
+        return $this->render('LSIMarketBundle:market:voir.html.twig', array('annonce' => $annonce,
+            'auteur' => $auteur,
+            'var' => $var,
+        ));
+    }*/
+
+    public function voirAction($id){
+        $em =

@@ -1,0 +1,13 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}
+    Conditions générales d'Utilisation - {{ parent() }}
+{% endblock title %}
+
+{% block body %}
+	{# {{ dump(app.request.uri) }}
+	{{ dump(asset(cgu.webPath)) }} #}
+    <div>
+        <embed src="http://docs.google.com/gview?url=http://www.laschekina.com{{ asset(cgu.webPath) }}&embedded=true" width="970" height="500" ></embed>
+    </div>
+{% endblock body %}

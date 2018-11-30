@@ -1,0 +1,7 @@
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+{% endblock %}
+{{ form_start(form, {'attr': {'class': 'navbar-form navbar-left'}}) }}
+{{ form_widget(form.searchbar) }}
+{{ form_end(form) }}

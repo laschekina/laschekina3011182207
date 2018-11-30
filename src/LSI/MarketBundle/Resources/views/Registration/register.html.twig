@@ -1,0 +1,104 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% block fos_user_content %}
+{% include "@FOSUser/Registration/register_user.html.twig" %}
+{% endblock fos_user_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function () {
+            $("#fos_user_registration_form_adresse_ville").on('change', function monepci (valu) {
+                valu = $(this).val();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ls_imarket_mon_epci') }}',
+                    data: { ville_id: valu },
+                    
+                    success: function (data) {
+                        if(typeof data.status != "undefined" && data.status != "undefined"){
+                            if (data.status = "OK"){
+                                console.log(data);
+                                $("#epci").val(data.message['0'].e_nom);
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        alert("Une erreur s'est produite lors du chargement de l'EPCI");
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <script>
+        function usager() {
+
+            var valeur;
+
+            // Le bouton 'mairie'
+            if (document.getElementById('fos_user_registration_form_type_0').checked){
+                mairie.style.display = '';
+                // Pour ajouter l'attribut required au champ description
+                document.getElementById
+                ('fos_user_registration_form_mairie_description').setAttribute('required', 'required');
+                // Pour ajouter l'attribut required au champ service
+                document.getElementById
+                ('fos_user_registration_form_mairie_service').setAttribute('required', 'required');
+                // Pour ajouter l'attribut required au champ nom
+                document.getElementById('fos_user_registration_form_nom').
+                setAttribute('placeholder', 'Entrez le nom de votre mairie. Ex: Mairie de Paris');
+                // Pour ajouter l'attribut required au champ coordonnées du comptable
+                document.getElementById('fos_user_registration_form_mairie_comptable').setAttribute('required', 'required');
+                // Pour ajouter l'attribut required au champ EPCI
+                //document.getElementById('fos_user_registration_form_mairie_epci').setAttribute('required', 'required')
+
+                // Pour cacher les champs propres à l'administré
+                adminis.style.display = 'none';
+                // Pour retirer l'attribut required du champ prenom
+                document.getElementById
+                ('fos_user_registration_form_administre_prenom').removeAttribute('required');
+
+                /*document.getElementById
+                ('fos_user_registration_form_administre_langueMat').removeAttribute('required');*/
+
+                administ.style.display = 'none';
+                document.getElementById('fos_user_registration_form_administre_');
+
+                valeur = document.getElementById('fos_user_registration_form_type_0').value;
+            // Le bouton 'administré'
+            }else if(document.getElementById('fos_user_registration_form_type_1').checked){
+                // Pour afficher les champs propres à l'administré
+                adminis.style.display = '';
+                // Pour ajouter l'attribut required au champ prenom
+                document.getElementById
+                ('fos_user_registration_form_administre_prenom').setAttribute('required', 'required');
+
+                administ.style.display = '';
+                /*document.getElementById
+                ('fos_user_registration_form_administre_langueMat').setAttribute('required', 'required');*/
+                
+                // Pour définir l'attribut placeholder du champ nom
+                document.getElementById('fos_user_registration_form_nom').
+                setAttribute('placeholder', 'Entrez votre nom. Ex: Jean');
+
+                // Cacher les champs relatifs à la mairie
+                mairie.style.display = 'none';
+                document.getElementById
+                ('fos_user_registration_form_mairie_description').removeAttribute('required');
+                document.getElementById
+                ('fos_user_registration_form_mairie_service').removeAttribute('required');
+                // Pour ajouter l'attribut required au champ coordonnées du comptable
+                document.getElementById('fos_user_registration_form_mairie_comptable').removeAttribute('required');
+                maire.style.display = 'none';
+                //document.getElementById('fos_user_registration_form_mairie_epci').removeAttribute('required');
+
+                valeur = document.getElementById('fos_user_registration_form_type_0').value;
+            }
+        }
+    </script>
+    {##}
+{% endblock javascripts %}

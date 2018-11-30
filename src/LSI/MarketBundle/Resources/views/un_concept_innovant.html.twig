@@ -1,0 +1,75 @@
+<head>
+	{% extends '::layout.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}    
+
+<link rel="stylesheet" href="{{ asset('bundles/lsimarket/css/singlePageTemplate.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/lsimarket/css/iconic.cs') }}">
+	<link rel="stylesheet" href="{{ asset('bundles/lsimarket/fonts/gisha.ttf.css') }}">
+{% endblock stylesheets %}
+
+{%  block body %}
+
+<!-- Main Container -->
+<div class="container"> 
+  <!-- Navigation -->
+  <!-- Hero Section -->
+  <section class="hero" id="hero"> </section>
+  <!-- About Section -->
+  <section class="about" id="about">
+    <h2 class="hidden">About</h2>
+    <p class="text_column">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+    <p class="text_column">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+    <p class="text_column">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+  </section>
+  <!-- Stats Gallery Section -->
+  <div class="gallery">
+    <div class="thumbnail">
+     <h1 class="stats"> <span class="iconic-check-alt"></span></h1>
+      <h4>UN SERVICE DE QUALITE</h4>
+      <p>One line description</p>
+    </div>
+    <div class="thumbnail">
+      <h1 class="stats"> <span class="iconic-clock-o"></span></h1>
+     <h4>RESPECT DES DELAI</h4>
+     <p>One line description</p>
+    </div>
+    <div class="thumbnail">
+      <h1 class="stats"><span class="iconic-thumbs-o-up "></span></h1>
+      <h4>UN SERVICE FIABLE </h4>
+      <p>One line description</p>
+    </div>
+    <div class="thumbnail">
+      <h1 class="stats"><span class="iconic-group  "></span></h1>
+      <h4>DES PARTENAIRES ENGAGES</h4>
+      <p>One line description</p>
+    </div>
+  </div>
+  <!-- Parallax Section -->
+  <section class="banner">
+    <h2 class="parallax">UN CONCEPT INNOVANT</span></h2>
+    <p class="parallax_description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+  </section>
+  <!-- More Info Section -->
+  <footer>
+    <h2 id="titre_body"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;UN OUTIL PERFORMANT </h2>
+    <article class="footer_column"> <img src="{{asset ('bundles/lsimarket/images/slider2.jpg" alt="" width="1200" height="680" class="cards"/>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+    </article>
+    <article class="footer_column"> <img src="{{asset ('bundles/lsimarket/images/slider4.jpg" alt="" width="1200" height="680" class="cards"/>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+    </article>
+  </footer>
+  <!-- Footer Section -->
+  <section class="footer_banner" id="contact">
+    <h2 class="hidden">Footer Banner Section </h2>
+    <p class="hero_header">POUR RECEVOIR NOS NEWS &amp; MISE A JOUR</p>
+    <button class="btn btn-primary">S'ABONNER</button>
+  </section>
+
+</div>
+{% endblock %}
+
+

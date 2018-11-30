@@ -1,0 +1,80 @@
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+    <div>
+        <h3>Gestion des habilitations de {{ membre.membre.nom }}</h3>
+        <hr/>
+        <form action="{{ path('ls_imarket_gerer_membre', {'id': membre.id}) }}" method="post">
+            <table>
+                <tr>
+                    <td width="250px"><label for="achat">Signer un contrat d'achat</label></td>
+                    <td>
+                        {% if membre.membre.contratAchat == 1 %}
+                            <input type="checkbox" name="achat" checked>
+                        {% else %}
+                            <input type="checkbox" name="achat" />
+                        {% endif %}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="vente">Signer un contrat de vente</label></td>
+                    <td>
+                        {% if membre.membre.vente == 1 %}
+                            <input type="checkbox" name="vente" checked>
+                        {% else %}
+                            <input type="checkbox" name="vente"/>
+                        {% endif %}
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td><label for="devis">Faire un devis</label></td>
+                    <td>
+                        {% if membre.membre.devis == 1 %}
+                            <input type="checkbox" name="devis" checked>
+                        {% else %}
+                            <input type="checkbox" name="devis"/>
+                        {% endif %}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="reference">Ajouter une reférence</label></td>
+                    <td>
+                        {% if membre.membre.reference == 1 %}
+                            <input type="checkbox" name="reference" checked>
+                        {% else %}
+                            <input type="checkbox" name="reference"/>
+                        {% endif %}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="disable">Désactiver</label></td>
+                    <td>
+                        {% if membre.enabled == 1 %}
+                            <input type="checkbox" name="disabled" />
+                        {% else %}
+                            <input type="checkbox" name="disabled" checked />
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr><td><br/></td></tr>
+                <tr>
+                    <td>
+                        <center>
+                            <a role="button" href="{{ path('ls_imarket_mon_espace') }}" class="btn btn-default">Annuler</a>
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <input type="submit" value="Enregistrer" name="regHab" class="btn btn-primary"/>
+                        </center>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock body %}

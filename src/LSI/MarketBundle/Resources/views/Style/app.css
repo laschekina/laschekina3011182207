@@ -1,0 +1,166 @@
+
+.text-underline {
+    text-decoration: underline!important;
+}
+
+.text-bold {
+    font-weight: bold!important;
+}
+
+/*MARGINS BOTTOM*/
+
+.mb-2 {
+    margin-bottom: 20px!important;
+}
+
+.mb-1 {
+    margin-bottom: 10px!important;
+}
+
+.mb-5 {
+    margin-bottom: 50px!important;
+}
+
+
+/*MARGINS TOP*/
+
+.mt-2 {
+    margin-top: 20px!important;
+}
+
+.mt-1 {
+    margin-top: 10px!important;
+}
+
+.mt-5 {
+    margin-top: 50px!important;
+}
+
+/*MARGINS LEFT*/
+
+.ml-2 {
+    margin-left: 20px!important;
+}
+
+.ml-1 {
+    margin-left: 10px!important;
+}
+
+.ml-5 {
+    margin-left: 50px!important;
+}
+
+/*MARGINS RIGHT*/
+
+.mr-2 {
+    margin-right: 20px!important;
+}
+
+.mr-1 {
+    margin-right: 10px!important;
+}
+
+.mr-5 {
+    margin-right: 50px!important;
+}
+
+/*PADDINGS*/
+
+.pad-v {
+    padding-top: 20px!important;
+    padding-bottom: 20px!important;
+}
+
+.pad-h {
+    padding-left: 20px!important;
+    padding-right: 20px!important;
+}
+
+.pad-lg-v {
+    padding-top: 50px!important;
+    padding-bottom: 50px!important;
+}
+
+.pad-lg-h {
+    padding-left: 50px!important;
+    padding-right: 50px!important;
+}
+
+.pm-0 {
+    padding: 0;
+    margin: 0;
+}
+
+.pad-0 {
+    padding: 0;
+}
+
+/*PADDINS BOTTOM*/
+
+.pb-2 {
+    padding-bottom: 20px!important;
+}
+
+.pb-1 {
+    padding-bottom: 10px!important;
+}
+
+.pb-5 {
+    padding-bottom: 50px!important;
+}
+
+/*PADDINS TOP*/
+
+.pt-2 {
+    padding-top: 20px!important;
+}
+
+.pt-1 {
+    padding-top: 10px!important;
+}
+
+.pt-5 {
+    padding-top: 50px!important;
+}
+
+/*PADDINS LEFT*/
+
+.pl-2 {
+    padding-left: 20px!important;
+}
+
+.pl-1 {
+    padding-left: 10px!important;
+}
+
+.pl-5 {
+    padding-left: 50px!important;
+}
+
+/*PADDINS RIGHT*/
+
+.pr-2 {
+    padding-right: 20px!important;
+}
+
+.pr-1 {
+    padding-right: 10px!important;
+}
+
+.pr-5 {
+    padding-right: 50px!important;
+}
+
+/*FONT SIZE*/
+
+.fz-2 {
+    font-size: 20px!important;
+}
+
+.fz-5 {
+    font-size: 5rem!important;
+}
+
+.fz-100 {
+    font-size: 10rem!important;
+}

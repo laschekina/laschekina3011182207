@@ -1,0 +1,153 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+ 
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    {#{{ form_widget(form) }}#}
+<div id="page" class="row">
+    <div class="row">
+        <div class="col-lg-offset-4 col-xs-5 col-md-5 col-lg-5">
+            <div class="form-group" onclick="usager() style="margin-top:12px"">
+                {{ form_label(form.type, 'Je suis', {'label_attr' : {'class' : 'radio-inline'}}) }}
+                {{ form_errors(form.type) }}
+                {{ form_widget(form.type, {'label_attr' : {'class' : 'radio-inline'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class=" col-xs-6 col-md-6 col-lg-6"> {#Block de gauche#}
+        <div class="form-group">
+            {{ form_label(form.nom, 'Nom') }}
+            {{ form_errors(form.nom) }}
+            {{ form_widget(form.nom) }}
+        </div>
+        {# Affiche l'input prénom pour l'inscription d'un administré #}
+        {% if form.administre is defined %}
+            <div class="form-group" id="adminis" style="display: none;">
+                <div class="form-group">
+                    {{ form_label(form.administre.prenom, 'Votre prénom', {'required': false}) }}
+                    {{ form_widget(form.administre.prenom, {'required': false, 'attr' : {'placeholder' : 'Votre/vos prénom(s)'}}) }}
+                </div>
+            </div>
+        {% endif %}
+
+        {# Affiche les inputs description et service pour l'inscription d'une mairie #}
+        {% if form.mairie is defined %}
+            <div class="form-group" id="mairie" style="display: none;">
+                <div class="form-group">
+                    {{ form_label(form.mairie.description, 'Description de la mairie', {'required': false}) }}
+                    {{ form_widget(form.mairie.description, {'required': false, 'attr' : {'placeholder' : 'La description de votre mairie'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.mairie.service, 'Service de la mairie', {'required': false}) }}
+                    {{ form_widget(form.mairie.service, {'required': false, 'attr' : {'placeholder' : 'Les services proposés par votre mairie'}}) }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            {{ form_label(form.username, 'Nom d\'utilisateur') }}
+            {{ form_errors(form.username) }}
+            {{ form_widget(form.username, {'attr' : {'placeholder' : 'Entrez votre nom d\'utilisateur'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.email, 'Adresse email') }}
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email, {'attr' : {'placeholder' : 'Entrez votre adresse e-mail'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.plainPassword.first, 'Mot de passe') }}
+            {{ form_errors(form.plainPassword.first) }}
+            {{ form_widget(form.plainPassword.first, {'attr' : {'placeholder' : 'Entrez votre mot de passe'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.plainPassword.second, 'Confirmer le mot de passe') }}
+            {{ form_errors(form.plainPassword.second) }}
+            {{ form_widget(form.plainPassword.second, {'attr' : {'placeholder' : 'Rétapez le mot de passe'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.telephone) }}
+            {{ form_errors(form.telephone) }}
+            {{ form_widget(form.telephone, {'attr' : {'placeholder' : 'Votre numéro de téléphone'}}) }}
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-md-6 col-lg-6">
+        <div class="form-group">
+            {{ form_label(form.adresse.pays) }}
+            {{ form_errors(form.adresse.pays) }}
+            {{ form_widget(form.adresse.pays, {'attr' : {'placeholder' : 'Votre adresse'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.adresse.ville) }}
+            {{ form_errors(form.adresse.ville) }}
+            {{ form_widget(form.adresse.ville, {'attr' : {'placeholder' : 'Votre ville'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.adresse.rue, 'Numéro de rue') }}
+            {{ form_errors(form.adresse.rue) }}
+            {{ form_widget(form.adresse.rue, {'attr' : {'placeholder' : 'Numéro de rue'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.adresse.codePostal, 'Code postal') }}
+            {{ form_errors(form.adresse.codePostal) }}
+            {{ form_widget(form.adresse.codePostal, {'attr' : {'placeholder' : 'Code postal', 'onchange': 'monepci(this.value)'}}) }}
+        </div>
+
+        {% if form.mairie is defined %}
+            <div class="form-group" id="maire" style="display: none;">
+                {{ form_label(form.mairie.epci, 'EPCI') }}
+                {{ form_errors(form.mairie.epci) }}
+                {{ form_widget(form.mairie.epci, {'attr':{'placeholder':'Votre EPCI'}}) }}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            {{ form_label(form.indicatif, 'Indicatif de votre pays') }}
+            {{ form_errors(form.indicatif) }}
+            {{ form_widget(form.indicatif, {'attr' : {'placeholder' : 'L\'indicatif de votre pays'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.langue, 'Votre Langue (parlée)') }}
+            {{ form_errors(form.langue) }}
+            {{ form_widget(form.langue, {'attr' : {'placeholder' : 'Votre langue'}}) }}
+        </div>
+        {% if form.administre is defined %}
+                <div class="form-group" id="administ" style="display: none;">
+                    <div class="form-group">
+                        {{ form_label(form.administre.langueMat, 'Votre langue maternelle', {'required': false}) }}
+                        {{ form_widget(form.administre.langueMat, {'required': false, 'attr' : {'placeholder' : 'Votre langue maternelle'}}) }}
+                    </div>
+                </div>
+        {% endif %}
+    </div>
+
+    <div class="row ">
+
+        <div class="col-lg-offset-5 col-xs-5 col-md-5 col-lg-5">
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" class="input-checked" required />
+                    "En créant ce compte, je reconnais avoir pris connaissance des
+                    <a target="_blank" href="{{ path('ls_imarket_condition_generale') }}">conditions générales d'utilisations</a>, de la politique de confidentialité et la charte sur les cookies et je les accepte"
+                </label>
+
+                {#{{ form_label(form.cgu, '"En créant ce compte, je reconnais avoir pris connaissance des ')  }}
+                <a href="{{ path('lsi_market_homepage') }}">conditions d'utilisations</a>, de la politique de confidentialité et la charte sur les cookies et je les accepte"
+                #}{#{{ form_errors(form.cgu) }}
+                <div class="col-sm-10">#}{#
+                {{ form_widget(form.cgu) }}#}
+
+                {#, {'attr': {'class': 'form-control'}}
+            </div>#}
+            </div>
+            <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary"/>
+      </div>
+    </div>
+</div>
+{{ form_end(form) }}
+
+       
